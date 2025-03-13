@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Map</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid black;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([30, 100], 3); // Centered roughly in Asia
+
+        // Add OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Sample data for markers
+        var locations = [
+            {
+                region: "India",
+                lat: 20.5937,
+                lon: 78.9629,
+                table: `
+                    <table>
+                        <tr><th>Year</th><th>N</th><th>Incidence</th></tr>
+                        <tr><td>2015</td><td>100</td><td>12.5</td></tr>
+                        <tr><td>2011-2015</td><td>500</td><td>10.8</td></tr>
+                    </table>`
+            },
+            {
+                region: "Russia",
+                lat: 61.5240,
+                lon: 105.3188,
+                table: `
+                    <table>
+                        <tr><th>Year</th><th>N</th><th>Incidence</th></tr>
+                        <tr><td>2015</td><td>120</td><td>13.2</td></tr>
+                        <tr><td>2011-2015</td><td>550</td><td>11.6</td></tr>
+                    </table>`
+            },
+            {
+                region: "China",
+                lat: 35.8617,
+                lon: 104.1954,
+                table: `
+                    <table>
+                        <tr><th>Year</th><th>N</th><th>Incidence</th></tr>
+                        <tr><td>2015</td><td>150</td><td>14.1</td></tr>
+                        <tr><td>2011-2015</td><td>600</td><td>12.3</td></tr>
+                    </table>`
+            }
+        ];
+
+        // Add markers to the map
+        locations.forEach(function(loc) {
+            L.marker([loc.lat, loc.lon])
+                .addTo(map)
+                .bindPopup(`<b>${loc.region}</b><br>${loc.table}`, { maxWidth: 400 });
+        });
+
+    </script>
+</body>
+</html>
